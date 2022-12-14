@@ -13,6 +13,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+mongoose.set('strictQuery', false);
+
 mongoose.connect("mongodb://localhost:27017/userDB")
 
 const userSchema = new mongoose.Schema({
