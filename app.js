@@ -76,24 +76,18 @@ app.post("/register", (req,res) => {
 });
 
 app.post("login", (req,res) => {
-    const username = req.body.username;
-    const password = md5(req.body.password);
-
-    UserfindOne({email: username}, (err,foundUser) => {
+    const user = new User({
+        username: req.body.username,
+        password: req.body.password
+    })
+   
+    req.login(user, (err) => {
         if (err) {
             console.log(err);
         } else {
-            if (foundUser) {
-                if (foundUser.password === password) {
-                    bcrypt.compare(password, foundUser.password, function(err, result) {
-                        if(result == true){
-                            res.render("secrets");
-                        }
-                    });
-                    
-                 
-                }
-            }
+            passport.authenticate("local")(req,res,()=>{
+                res.redirect("secrets");
+            })
         }
     })
 })
