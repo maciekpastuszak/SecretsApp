@@ -31,7 +31,8 @@ mongoose.connect("mongodb://localhost:27017/userDB")
 
 const userSchema = new mongoose.Schema({
     email: String,
-    password: String
+    password: String,
+    googleId: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -56,7 +57,7 @@ passport.serializeUser(function(user, cb) {
       return cb(null, user);
     });
   });
-  
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
