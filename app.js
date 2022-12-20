@@ -95,11 +95,15 @@ app.get("/register", (req,res) => {
 });
 
 app.get("/secrets", (req, res) => {
-    if (req.isAuthenticated()){
-        res.render("secrets");
+   User.find({"secret" : {$ne: null}}, (err, foundUsers) => {
+    if (err){
+        console.log(err)
     } else {
-        res.redirect("/register");
-    };
+        if (foundUsers) {
+            res.render("secrets", {usersWithSecrets: foundUsers});
+        }
+    }
+   });
 });
 
 app.post("submit", (req,res) => {
