@@ -98,7 +98,15 @@ app.get("/secrets", (req, res) => {
         res.render("secrets");
     } else {
         res.redirect("/register");
-    }
+    };
+});
+
+app.get("/submit", (req,res) => {
+    if (req.isAuthenticated()){
+        res.render("submit");
+    } else {
+        res.redirect("/register");
+    };
 });
 
 app.get("/logout", (req,res) => {
